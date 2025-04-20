@@ -15,22 +15,23 @@ INCLUDELIB user32.lib
 .data
     
 
-	; data declarations go here
- p       WORD 100          ; 16-bit variable
-    q       DWORD 5000        ; 32-bit variable
-    result  DWORD ?           ; 32-bit result variable
+	myArray WORD 1000h, 2000h, 3000h, 4000h, 5000h  ; 5 word elements
 
 .code
 main PROC
-	 
-   ; Zero-extend 'p' to 32-bit
-    movzx eax, p        ; EAX = zero-extended value of p (16-bit to 32-bit)
+	
+    mov esi, OFFSET myArray   ; ESI points to start of array
+    mov ecx, 5                ; Counter for 5 elements
+    xor eax, eax              ; Clear EAX to hold the sum
 
-    ; Add 'q' to EAX
-    add eax, q          ; EAX = EAX + q
+sum_loop:
+    mov ax, [esi]             ; Get WORD at [ESI] into AX
+    add eax, eax              ; Add AX to EAX
+    add esi, 2                ; Move to next WORD (2 bytes)
+    loop sum_loop             ; Repeat 5 times
 
-    ; Store the result in 'result'
-    mov result, eax
+    ; Result is in EAX
+ 
 
 
 

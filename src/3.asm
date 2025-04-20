@@ -15,26 +15,22 @@ INCLUDELIB user32.lib
 .data
     
 
-	; data declarations go here
-   a       WORD 500          ; 16-bit variable
-    b       DWORD 10000       ; 32-bit variable
-    c       DWORD 2500        ; 32-bit variable
-    result  DWORD ?           ; 32-bit result variable
+	myArray WORD 1, 2, 3, 4, 5, 6
+constVal WORD 10
 
 .code
 main PROC
-	 ; Step 1: Zero-extend 'a' to 32-bit
-    movzx eax, a         ; EAX = zero-extended value of a
+	
+   
+ mov ecx, 6            ; Number of elements
+    xor esi, esi          ; Index register
 
-    ; Step 2: Calculate (b - a)
-    mov ebx, b           ; EBX = b
-    sub ebx, eax         ; EBX = b - a
-
-    ; Step 3: Calculate (b - a) - c
-    sub ebx, c           ; EBX = (b - a) - c
-
-    ; Step 4: Store the result
-    mov result, ebx
+process_loop:
+    mov ax, myArray[esi]  ; AX = array element
+    add ax, constVal      ; Add constant
+    mov myArray[esi], ax  ; Store back
+    add esi, 2            ; Move to next word
+    loop process_loop
 
 
 

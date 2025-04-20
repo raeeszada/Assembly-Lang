@@ -15,24 +15,19 @@ INCLUDELIB user32.lib
 .data
     
 
-	; data declarations go here
- x       DWORD 25000        ; First 32-bit value
-    y       DWORD 15000        ; Second 32-bit value
-    result  DWORD ?            ; Result variable
+	myArray BYTE 10, 20, 30, 40, 50  ; Array of 5 bytes
 .code
 main PROC
 	
-    ; Load x into EAX
-    mov eax, x
+     mov esi, OFFSET myArray      ; Point ESI to start of array
+    mov ecx, 5                   ; Counter for 5 elements
 
-    ; Add y to EAX
-    add eax, y
-
-    ; Store result in 'result'
-    mov result, eax
-
-
-
+loop_start:
+    mov al, [esi]                ; Move byte from [ESI] to AL
+    inc al                       ; Increment value by 1
+    mov [esi], al                ; Store updated value back
+    inc esi                      ; Move to next byte
+    loop loop_start              ; Repeat until ECX = 0
 
 
 

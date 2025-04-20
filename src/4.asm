@@ -15,21 +15,28 @@ INCLUDELIB user32.lib
 .data
     
 
-	; data declarations go here
-    a       WORD 30000        ; Unsigned 16-bit value
-    b       DWORD 40000       ; Unsigned 32-bit value
-    result  DWORD ?           ; 32-bit result variable
+	myArray DWORD 1, 2, 3, 4, 5, 6  ; 6 elements (but we'll use every 2nd one)
 
 .code
 main PROC
-	 ; Step 1: Zero-extend 'a' to 32-bit
-    movzx eax, a        ; EAX = zero-extended value of a
+	
+   
+   mov ecx, 3               ; We'll access 3 elements: index 0, 2, 4
+    mov ebx, 0               ; Index for scaling
 
-    ; Step 2: Add 'b' to EAX
-    add eax, b          ; EAX = a + b
+process_scaled:
+    mov eax, myArray[ebx*8]  ; Access every second DWORD (4*2 = 8 bytes step)
+    add eax, 2
+    mov myArray[ebx*8], eax
+    inc ebx
+    loop process_scaled
 
-    ; Step 3: Store the result
-    mov result, eax
+
+
+
+
+
+	
 	call DumpRegs ; displays registers in console
 
 	exit

@@ -15,23 +15,31 @@ INCLUDELIB user32.lib
 .data
     
 
-	; data declarations go here
-     p       WORD 12345        ; Unsigned 16-bit value
-    q       WORD 20000        ; Unsigned 16-bit value
-    result  DWORD ?           ; 32-bit result variable
+	source BYTE 10, 20, 30, 40, 50
+dest   BYTE 5 DUP(0)         ; Empty destination array
+
 .code
 main PROC
-	 ; Step 1: Zero-extend 'p' to 32-bit
-    movzx eax, p        ; EAX = zero-extended value of p
+	
+   
+ mov esi, OFFSET source
+    mov edi, OFFSET dest
+    add esi, 4               ; Point to last byte of source (5-1=4)
+    mov ecx, 5
 
-    ; Step 2: Zero-extend 'q' to 32-bit
-    movzx ebx, q        ; EBX = zero-extended value of q
+reverse_loop:
+    mov al, [esi]
+    mov [edi], al
+    dec esi                  ; Move backward in source
+    inc edi                  ; Move forward in dest
+    loop reverse_loop
 
-    ; Step 3: Perform the addition
-    add eax, ebx        ; EAX = p + q
 
-    ; Step 4: Store the result
-    mov result, eax
+
+
+
+
+	
 	call DumpRegs ; displays registers in console
 
 	exit

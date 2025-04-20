@@ -14,7 +14,7 @@ INCLUDELIB user32.lib
 
 .data
     
-
+myVar WORD 1234h
 	; data declarations go here
 
 .code
@@ -22,7 +22,8 @@ main PROC
 	
    
  
-
+mov esi, OFFSET myVar
+    inc WORD PTR [esi]    ; Correct size specified
 
 
 
